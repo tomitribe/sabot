@@ -10,3 +10,66 @@ Future revisions may be donated or merged in with http://tamaya.incubator.apache
 
 Java EE 6 or higher required.  Optional dependency on Apache TomEE 1.0 or higher.
 
+== @Inject @Config
+
+The core concept is configuration data can be injected into your applications via `@Inject` with a simple `@Config` qualifier that names a property whose value you need.  The
+Properties themselves can come from `java.lang.System.getProperties()`, properties packed in your `WEB-INF/classes/` directory or
+(optionally for TomEE users) in the `conf/system.properties` file of your server.
+
+[source,java]
+@Inject
+@Config(value = "greeting")
+private String greeting;
+
+@Inject
+@Config(value = "color", defaultValue = "orange")
+private String color;
+
+@Inject
+@Config(value = "base", defaultValue = "${user.dir}")
+private File userDir;
+
+@Inject
+@Config(value = "home", defaultValue = "${user.home}")
+private File defaultFile;
+
+@Inject
+@Config(value = "service.timeout", defaultValue = "2 hours and 54 minutes")
+private Duration timeout;
+
+@Inject
+@Config(value = "service.enabled", defaultValue = "false")
+private Boolean enabled;
+
+@Inject
+@Config(value = "tx.retry")
+private Integer retry;
+[source]
+
+
+== Custom Java Types
+
+Sabot does *not* use `java.beans.PropertyEditor` implementations by default like other String-to-Java libraries do.
+
+After 20 years of Java's existence, it's safe to say two styles dominate converting a `String` into a Java object:
+
+ * A *Constructor* that take a single String as an argument.  Examples:
+ ** `java.io.File(String)`
+ ** `java.lang.Integer(String)`
+ ** `java.net.URL(String)`
+ * A *static method* that returns an instance of the same class.  Examples:
+ ** `java.util.regex.Pattern.compile(String)`
+ ** `java.net.URI.create(String)`
+ ** `java.util.concurrent.TimeUnit.valueOf(String)`
+
+
+Use either of these conventions and Sabot will have no problem instantiating your object with the user-supplied `String` from the command-line args.
+
+This should cover *95%* of all cases, but in the event it does not, you can create a `java.beans.PropertyEditor` and register it with the JVM.
+Use your Google-fu to learn how to do that.
+
+The order of precedence is as follows:
+
+ 1. Constructor
+ 2. Static method
+ 3. `java.beans.PropertyEditor`
