@@ -17,6 +17,7 @@ Properties themselves can come from `java.lang.System.getProperties()`, properti
 (optionally for TomEE users) in the `conf/system.properties` file of your server.
 
 [source,java]
+----
 @Inject
 @Config(value = "greeting")
 private String greeting;
@@ -45,7 +46,7 @@ private Boolean enabled;
 @Config(value = "tx.retry")
 private Integer retry;
 [source]
-
+----
 
 == Custom Java Types
 
