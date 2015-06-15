@@ -2,7 +2,8 @@
 
 "`A sabot /ˈsæboʊ/ is a device used in a firearm or cannon to fire a projectile, such as a bullet, that is smaller than the bore diameter, or which must be held in a precise position.`"
 
-Sabot is an extremely simple CDI Extension used to fire configuration into your applications with extreme precision.  It also happens to be the name of the awesome CDI spec-lead, https://twitter.com/antoine_sd[Antoine Sabot-Durand]
+Sabot is an environment-aware CDI Extension used to fire configuration into your applications with extreme precision.
+It also happens to be the name of the awesome CDI spec-lead, https://twitter.com/antoine_sd[Antoine Sabot-Durand],
 who wrote the core code this small project is based upon.
 
 Future revisions may be donated or merged in with http://tamaya.incubator.apache.org/[Apache Tamaya].
