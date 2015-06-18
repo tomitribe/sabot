@@ -29,14 +29,14 @@
   </parent>
 
   <artifactId>sabot</artifactId>
-  <version>0.7</version>
+  <version>0.8-SNAPSHOT</version>
 
 
   <scm>
     <connection>scm:git:git@github.com:tomitribe/sabot.git</connection>
     <url>scm:git:git@github.com:tomitribe/sabot.git</url>
     <developerConnection>scm:git:git@github.com:tomitribe/sabot.git</developerConnection>
-    <tag>sabot-0.7</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <packaging>jar</packaging>
