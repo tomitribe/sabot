@@ -1,4 +1,5 @@
 = Sabot
+:showtitle:
 
 "`A sabot /ˈsæboʊ/ is a device used in a firearm or cannon to fire a projectile, such as a bullet, that is smaller than the bore diameter, or which must be held in a precise position.`"
 
