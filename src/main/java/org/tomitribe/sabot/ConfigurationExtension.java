@@ -89,17 +89,17 @@ public class ConfigurationExtension implements Extension {
         }
 
         @Override
-        public Object create(CreationalContext<Object> creationalContext) {
+        public Object create(final CreationalContext<Object> creationalContext) {
             return delegate.create(creationalContext);
         }
 
         @Override
-        public void destroy(Object instance, CreationalContext<Object> creationalContext) {
+        public void destroy(final Object instance, final CreationalContext<Object> creationalContext) {
             delegate.destroy(instance, creationalContext);
         }
     }
 
-    private Set<Type> types = new HashSet<>();
+    private final Set<Type> types = new HashSet<>();
     private Bean<?> convBean;
 
     public void retrieveTypes(@Observes final ProcessBean<?> pb) {
@@ -107,7 +107,7 @@ public class ConfigurationExtension implements Extension {
         final ConfigurationResolver resolver = ConfigurationResolver.get();
         final Set<InjectionPoint> ips = pb.getBean().getInjectionPoints();
 
-        for (InjectionPoint injectionPoint : ips) {
+        for (final InjectionPoint injectionPoint : ips) {
             if (injectionPoint.getAnnotated().isAnnotationPresent(Config.class)) {
                 final Config annotation = injectionPoint.getAnnotated().getAnnotation(Config.class);
                 final String key = annotation.value();

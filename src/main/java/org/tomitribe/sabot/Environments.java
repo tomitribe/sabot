@@ -45,7 +45,7 @@ public enum Environments {
         }
 
         // Load each environment in the list
-        for (String env : value.split(" *, *")) {
+        for (final String env : value.split(" *, *")) {
             properties.putAll(load(env));
         }
 

@@ -75,8 +75,8 @@ public class EnvironmentsTest {
     }
 
 
-    private static void generateAsserts(Properties test) {
-        for (Map.Entry<Object, Object> entry : test.entrySet()) {
+    private static void generateAsserts(final Properties test) {
+        for (final Map.Entry<Object, Object> entry : test.entrySet()) {
             System.out.printf("assertEquals(\"%s\", test.getProperty(\"%s\"));%n", entry.getValue(), entry.getKey());
         }
     }

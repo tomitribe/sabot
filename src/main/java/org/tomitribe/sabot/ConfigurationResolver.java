@@ -46,7 +46,7 @@ public class ConfigurationResolver {
         // will nicely also have the ability to override application settings
         final Properties overrides = SystemInstance.get().getProperties();
 
-        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+        for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
             if (overrides.containsKey(entry.getKey())) {
                 final Object newValue = overrides.get(entry.getKey());
 
@@ -56,7 +56,7 @@ public class ConfigurationResolver {
             }
         }
 
-        for (Map.Entry<Object, Object> entry : this.properties.entrySet()) {
+        for (final Map.Entry<Object, Object> entry : this.properties.entrySet()) {
             LOGGER.info(String.format("Config: %s = `%s`", entry.getKey(), entry.getValue()));
         }
     }

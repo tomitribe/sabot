@@ -29,18 +29,18 @@ public enum Interpolation {
         return _interpolate(copy(properties));
     }
 
-    private static Properties copy(Properties properties) {
+    private static Properties copy(final Properties properties) {
         final Properties copy = new Properties();
         copy.putAll(properties);
         return copy;
     }
 
-    private static Properties _interpolate(Properties interpolated) {
+    private static Properties _interpolate(final Properties interpolated) {
         boolean interpolating = true;
         while (interpolating) {
 
             interpolating = false;
-            for (Map.Entry<Object, Object> entry : interpolated.entrySet()) {
+            for (final Map.Entry<Object, Object> entry : interpolated.entrySet()) {
                 final String value = entry.getValue().toString();
 
                 final String formatted = format(value, interpolated);
