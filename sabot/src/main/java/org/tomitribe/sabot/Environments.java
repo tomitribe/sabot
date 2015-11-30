@@ -17,56 +17,82 @@
 package org.tomitribe.sabot;
 
 
+import javax.resource.ResourceException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public enum Environments {
     ;
     private static final Logger LOGGER = Logger.getLogger(Environments.class.getName());
 
-    public static Properties getProperties(final String value) {
+    /**
+     * Combine the base properties with the environment properties specified by the parameter if found.
+     * If not found then the method will return only the base properties object, but will log errors.
+     *
+     * @param environments Single or comma separated list of environment properties to load
+     * @return Single or combined Properties
+     * @throws ResourceException
+     */
+    public static Properties getProperties(final String environments) throws ResourceException {
 
         final Properties properties = new Properties();
 
-        { // Load the base.properties  (optional)
+        { // Always load the base.properties (optional but default)
             final String base = "base";
 
             final String resourceName = base + ".properties";
 
             final URL resource = getResource(resourceName);
             if (resource == null) {
-                LOGGER.info("No " + resourceName + " found.");
+                LOGGER.log(Level.INFO, "No " + resourceName + " found.");
             } else {
-                properties.putAll(load(base));
+                try {
+                    properties.putAll(load(base));
+                } catch (final ResourceException e) {
+                    LOGGER.log(Level.INFO, "The properties file 'base.properties' was not found on the classpasth");
+                }
             }
         }
 
-        // Load each environment in the list
-        for (final String env : value.split(" *, *")) {
-            properties.putAll(load(env));
+        if (null != environments) {
+            // Load each environment in the list
+            for (final String env : environments.split(" *, *")) {
+                properties.putAll(load(env));
+            }
         }
 
         // Process any {} variable references
         return Interpolation.interpolate(properties);
     }
 
-    private static Properties load(final String value) {
+    private static Properties load(final String value) throws ResourceException {
         final Properties properties = new Properties();
         final String resourceName = value + ".properties";
         final URL resource = getResource(resourceName);
 
         if (resource == null) {
-            throw new IllegalArgumentException("Can not find environment `" + resourceName + "` from the classpath.");
+            throw new ResourceException("Unable to find '" + resourceName + "' on the classpath");
         }
 
-        try (final InputStream inputStream = resource.openStream()) {
+        InputStream inputStream = null;
+        try {
+            inputStream = resource.openStream();
             properties.load(inputStream);
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Can not load environment `" + resource.toExternalForm() + "`.");
+            throw new ResourceException("Failed to load environment '" + resource.toExternalForm() + "'");
+        } finally {
+            if (null != inputStream) {
+                try {
+                    inputStream.close();
+                } catch (final Exception e) {
+                    //no-op
+                }
+            }
         }
         return properties;
     }

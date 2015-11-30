@@ -16,18 +16,23 @@
  */
 package org.tomitribe.sabot;
 
-import org.apache.openejb.OpenEjbContainer;
-import org.junit.Test;
+import java.util.Properties;
 
-import javax.ejb.embeddable.EJBContainer;
+/**
+ * Provides the configuration observer interface.
+ * No observer order is provided. Existing resolved properties can be overwritten.
+ *
+ * Implementations should register as an observer using ConfigurationResolver.registerConfigurationObserver([impl]);
+ */
+public interface ConfigurationObserver {
 
-public class ConfigurationProducerFailedInjectionTest {
-
-    @Test(expected = OpenEjbContainer.AssembleApplicationException.class)
-    public void notFoundShouldNotDeploy() {
-        // this explicitly tests that a non resolvable config makes
-        // the deployment fail and we won't have any failure at runtime
-        EJBContainer.createEJBContainer();
-    }
-
+    /**
+     * Calls the observer with the current properties.
+     * Implementations can add to or override the supplied properties.
+     *
+     * This ConfigurationObserver is automatically removed
+     *
+     * @param resolved Currently resolved properties
+     */
+    void mergeConfiguration(final Properties resolved);
 }

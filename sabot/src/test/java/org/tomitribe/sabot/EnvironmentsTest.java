@@ -18,6 +18,7 @@ package org.tomitribe.sabot;
 
 import org.junit.Test;
 
+import javax.resource.ResourceException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -40,8 +41,8 @@ public class EnvironmentsTest {
         assertEquals("joecool", test.getProperty("remote.username"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void noEnvFound() {
+    @Test(expected = ResourceException.class)
+    public void noEnvFound() throws ResourceException {
         Environments.getProperties("does not exists");
     }
 

@@ -21,6 +21,7 @@ import org.tomitribe.util.editor.Converter;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ApplicationScoped
@@ -33,6 +34,11 @@ public class ConfigurationProducer {
         this.resolver = ConfigurationResolver.get();
     }
 
+    /**
+     * Resolves configuration for the provided InjectionPoint
+     * @param injectionPoint InjectionPoint
+     * @return Resolved Object or default
+     */
     @Produces
     @Config
     public Object resolveAndConvert(final InjectionPoint injectionPoint) {
@@ -45,7 +51,7 @@ public class ConfigurationProducer {
         // enforces the resolvability of the config
         if (!resolver.isResolvableConfig(key, defaultValue)) {
             throw new IllegalStateException(String.format(
-                    "Can't resolve config %s for environment `%s`.",
+                    "Unable to resolve configuration %s for environment '%s'.",
                     key, resolver.getEnvironment()));
         }
 
@@ -53,7 +59,9 @@ public class ConfigurationProducer {
 
         final Class<?> toType = (Class<?>) injectionPoint.getAnnotated().getBaseType();
 
-        LOGGER.finest(String.format("Injecting %s for key %s in class %s", key, value, injectionPoint.toString()));
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.finest(String.format("Injecting %s for key %s in class %s", key, value, injectionPoint.toString()));
+        }
 
         return Converter.convert(value, toType, key);
     }

@@ -16,11 +16,13 @@
  */
 package org.tomitribe.sabot;
 
-import org.apache.openejb.loader.SystemInstance;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ConfigurationResolverTest {
 
@@ -28,20 +30,19 @@ public class ConfigurationResolverTest {
 
     @Before
     public void cleanEnv() {
-        SystemInstance.reset();
-        System.clearProperty("environment");
+        System.clearProperty(ConfigurationResolver.ENVIRONMENT);
 
         resolver = new ConfigurationResolver();
     }
 
     @Test
     public void defaultEnvironment() {
-        assertEquals("test", resolver.getEnvironment());
+        assertEquals("base", resolver.getEnvironment());
     }
 
     @Test
     public void overrideDefaultEnvironment() {
-        System.setProperty("environment", "dev");
+        System.setProperty(ConfigurationResolver.ENVIRONMENT, "dev");
 
         // don't use the field cause before is invoked before we have a chance to set the environment
         assertEquals("dev", new ConfigurationResolver().getEnvironment());

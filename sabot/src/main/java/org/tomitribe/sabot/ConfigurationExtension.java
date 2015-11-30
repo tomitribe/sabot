@@ -37,6 +37,7 @@ public class ConfigurationExtension implements Extension {
         private final Bean<Object> delegate;
         private final Set<Type> types;
 
+        @SuppressWarnings("unchecked")
         public ConverterBean(final Bean convBean, final Set<Type> types) {
 
             this.types = types;
@@ -99,7 +100,7 @@ public class ConfigurationExtension implements Extension {
         }
     }
 
-    private final Set<Type> types = new HashSet<>();
+    private final Set<Type> types = new HashSet<Type>();
     private Bean<?> convBean;
 
     public void retrieveTypes(@Observes final ProcessBean<?> pb) {
@@ -116,9 +117,9 @@ public class ConfigurationExtension implements Extension {
                 // If there is a non resolvable configuration, we want to know at startup.
                 if (!resolver.isResolvableConfig(key, annotation.defaultValue())) {
                     throw new IllegalStateException(String.format(
-                            "Can't resolve config %s for environment `%s`. " +
-                                    "Make sure to define the following property `%s = <your config value>` " +
-                                    "for the environment `%s`",
+                            "Unable to resolve config %s for environment '%s'. " +
+                                    "Make sure the following property is defined '%s = <your config value>' " +
+                                    "for the '%s' environment",
                             key, resolver.getEnvironment(), key, resolver.getEnvironment()));
                 }
 
