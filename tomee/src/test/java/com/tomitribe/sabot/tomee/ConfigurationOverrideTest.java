@@ -67,6 +67,7 @@ public class ConfigurationOverrideTest {
     @Test
     public void actualPropertyValues() {
         assertEquals("joecool override", allTypes.getUsername());
+        assertEquals(2443, allTypes.getPort().intValue());
     }
 
     @SuppressWarnings("CdiInjectionPointsInspection")
@@ -76,14 +77,23 @@ public class ConfigurationOverrideTest {
         @Config(value = "remote.username", defaultValue = "bob")
         private String username;
 
+        @Inject
+        @Config(value = "remote.port", defaultValue = "0")
+        private Integer port;
+
         public String getUsername() {
             return username;
+        }
+
+        public Integer getPort() {
+            return port;
         }
 
         @Override
         public String toString() {
             return "SimpleType{" +
                     "username='" + username + '\'' +
+                    ", port=" + port +
                     '}';
         }
     }

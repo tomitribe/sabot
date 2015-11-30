@@ -13,8 +13,9 @@ Java EE 6 or higher required.  Optional dependency on Apache TomEE 1.0 or higher
 
 == @Inject @Config
 
-The core concept is configuration data can be injected into your applications via `@Inject` with a simple `@Config` qualifier that names a property whose value you need.  The
-Properties themselves can come from `java.lang.System.getProperties()`, properties packed in your `WEB-INF/classes/` directory or
+The core concept is configuration data can be injected into your applications via `@Inject` with a simple `@Config` qualifier that names a property whose value you require.
+
+The Properties themselves can come from `java.lang.System.getProperties()` using -D[property name]=[property value] on the command line, properties added to a `WEB-INF/classes/base.properties` file or
 (optionally for TomEE users) in the `conf/system.properties` file of your server.
 
 [source,java]
@@ -47,6 +48,30 @@ private Boolean enabled;
 @Config(value = "tx.retry")
 private Integer retry;
 [source]
+----
+
+== Custom Configuration
+
+There are various ways of customizing the configuration for differing environments. You can:
+
+* Add a 'test.properties' file to your test resources to override values found in the 'base.properties' file.
+* Add additional property file names via the System property 'org.tomitribe.sabot.environment' (Constant ConfigurationResolver.ENVIRONMENT)
+** -Dorg.tomitribe.sabot.environment=prod,dev - Sabot would then load the 'prod.properties' and 'dev.properties' files in that order.
+* Create a configuration observer and add to to the classpath - You can use the TomEEConfiguration.java as your starting point.
+[source,java]
+----
+@Singleton
+public class YourConfiguration implements ConfigurationObserver {
+
+    static {
+        //This must occur before anything is initialized
+        ConfigurationResolver.registerConfigurationObserver(new YourConfiguration());
+    }
+....
+@Override
+    public void mergeConfiguration(final Properties resolved) {
+        ....[merge or override the configuration]
+    }
 ----
 
 == Custom Java Types

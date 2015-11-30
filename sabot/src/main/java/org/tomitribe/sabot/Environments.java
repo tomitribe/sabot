@@ -41,32 +41,41 @@ public enum Environments {
 
         final Properties properties = new Properties();
 
-        { // Always load the base.properties (optional but default)
-            final String base = "base";
+        // Always load the base.properties (optional but default)
+        loadBase(properties, "base");
 
-            final String resourceName = base + ".properties";
 
-            final URL resource = getResource(resourceName);
-            if (resource == null) {
-                LOGGER.log(Level.INFO, "No " + resourceName + " found.");
-            } else {
-                try {
-                    properties.putAll(load(base));
-                } catch (final ResourceException e) {
-                    LOGGER.log(Level.INFO, "The properties file 'base.properties' was not found on the classpasth");
-                }
-            }
-        }
+        // Always load the test.properties (optional but override if found)
+        loadBase(properties, "test");
+
 
         if (null != environments) {
-            // Load each environment in the list
+            // Load each additional environment in the list
             for (final String env : environments.split(" *, *")) {
-                properties.putAll(load(env));
+
+                if (!"test".equals(env) && !"base".equals(env)) {
+                    properties.putAll(load(env));
+                }
             }
         }
 
         // Process any {} variable references
         return Interpolation.interpolate(properties);
+    }
+
+    private static void loadBase(final Properties properties, final String base) {
+        final String resourceName = base + ".properties";
+
+        final URL resource = getResource(resourceName);
+        if (resource == null) {
+            LOGGER.log(Level.FINE, "No " + resourceName + " found.");
+        } else {
+            try {
+                properties.putAll(load(base));
+            } catch (final ResourceException e) {
+                LOGGER.log(Level.FINE, "The properties file '" + base + ".properties' was not found on the classpasth");
+            }
+        }
     }
 
     private static Properties load(final String value) throws ResourceException {
