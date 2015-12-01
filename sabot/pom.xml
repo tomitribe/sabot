@@ -25,11 +25,11 @@
     <parent>
         <artifactId>sabot-parent</artifactId>
         <groupId>org.tomitribe</groupId>
-        <version>0.9-SNAPSHOT</version>
+        <version>0.9</version>
     </parent>
 
     <artifactId>sabot</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9</version>
     <name>Sabot :: CDI-based Configuration Injection</name>
 
     <dependencies>
