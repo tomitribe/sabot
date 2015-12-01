@@ -50,7 +50,6 @@ public class TomEEConfiguration implements ConfigurationObserver {
      * See {@link ConfigurationObserver#mergeConfiguration(Properties)}
      *
      * @param resolved Currently resolved properties
-     * @return Combined Properties
      */
     @Override
     public void mergeConfiguration(final Properties resolved) {
