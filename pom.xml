@@ -29,7 +29,7 @@
     </parent>
 
     <artifactId>sabot-parent</artifactId>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Sabot :: Parent</name>
 
@@ -37,7 +37,7 @@
         <connection>scm:git:git@github.com:tomitribe/sabot.git</connection>
         <url>scm:git:git@github.com:tomitribe/sabot.git</url>
         <developerConnection>scm:git:git@github.com:tomitribe/sabot.git</developerConnection>
-        <tag>sabot-parent-0.8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
