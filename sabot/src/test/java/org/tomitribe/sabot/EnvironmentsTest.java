@@ -57,7 +57,7 @@ public class EnvironmentsTest {
         assertEquals("https://srv1114.supertribe.org:1443/remote/service/url", test.getProperty("remote.target.url"));
         assertEquals("srv1114.supertribe.org:1443", test.getProperty("remote.address"));
         assertEquals("srv1114.supertribe.org", test.getProperty("remote.host"));
-        assertEquals("classpath:/service-wsdl.xml", test.getProperty("remote.wsdl.location"));
+        assertEquals("classpath:/test-service-wsdl.xml", test.getProperty("remote.wsdl.location"));
         assertEquals("joecool", test.getProperty("remote.username"));
     }
 
