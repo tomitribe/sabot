@@ -102,7 +102,7 @@ public class ConfigurationResolverTest {
         }
 
         // loaded from test.properties
-        assertEquals("classpath:/service-wsdl.xml", resolver.resolve("remote.wsdl.location", ""));
+        assertEquals("classpath:/test-service-wsdl.xml", resolver.resolve("remote.wsdl.location", ""));
         assertEquals("something-else", resolver.resolve("something", "something-else"));
 
         // loaded from base.properties
