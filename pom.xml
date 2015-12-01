@@ -35,9 +35,9 @@
     <name>Sabot :: Parent</name>
 
     <scm>
-        <connection>scm:git:git@github.com:tomitribe/sabot.git</connection>
-        <url>scm:git:git@github.com:tomitribe/sabot.git</url>
-        <developerConnection>scm:git:git@github.com:tomitribe/sabot.git</developerConnection>
+        <connection>scm:git:https://github.com/tomitribe/sabot.git</connection>
+        <url>scm:git:https://github.com/tomitribe/sabot.git</url>
+        <developerConnection>scm:git:https://github.com/tomitribe/sabot.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
